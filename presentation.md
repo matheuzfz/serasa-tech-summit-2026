@@ -1,19 +1,34 @@
 ---
-title: "Na Minha Máquina Funciona — Serasa Tech Summit 2026"
-theme: dracula
-revealOptions:
-  transition: slide
-  transitionSpeed: default
-  slideNumber: true
+theme: black
+width: 1920
+height: 1080
+margin: 0.1
+minScale: 0.2
+maxScale: 2.0
+transition: fade
 ---
+
+<style>
+  .reveal h1 { font-size: 3.5em; font-weight: bold; text-transform: uppercase; color: #fff; margin-bottom: 40px; }
+  .reveal h2 { font-size: 2.8em; color: #f8db03; margin-bottom: 40px; } /* Amarelo destaque */
+  .reveal p, .reveal li { font-size: 1.8em; line-height: 1.4; margin-bottom: 20px; }
+  .reveal ul { margin-left: 40px; }
+  .container { display: flex; align-items: center; justify-content: space-between; gap: 60px; height: 100%; }
+  .col-text { flex: 1.2; text-align: left; }
+  .col-img { flex: 1; text-align: right; }
+  .col-img img { max-height: 750px; width: auto; border-radius: 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+  .split-screen { display: flex; justify-content: space-between; gap: 40px; margin-top: 50px; }
+  .split-screen > div { width: 48%; background: rgba(255,255,255,0.08); padding: 50px; border-radius: 20px; text-align: left; }
+  .highlight-quote { font-size: 3em !important; font-style: italic; color: #f8db03; }
+</style>
 
 <!-- Slide 1: Capa -->
 
-# SERASA TECH SUMMIT 2026
+# Serasa Tech Summit 2026
 
 ## "Na Minha Máquina Funciona"
 
-### DevOps, IaC e o fim da desculpa mais antiga da TI
+DevOps, IaC e o fim da desculpa mais antiga da TI
 
 ---
 
@@ -21,10 +36,14 @@ revealOptions:
 
 ## Sobre Mim
 
+<div class="col-text">
+
 - **Backend & SRE** — vivo entre o código e a infraestrutura
 - De **Joinville**, Santa Catarina
 - **Maker** nas horas vagas: impressão 3D, automação e projetos que piscam LEDs
 - Já disse "na minha máquina funciona" mais vezes do que gosto de admitir
+
+</div>
 
 ---
 
@@ -32,17 +51,23 @@ revealOptions:
 
 ## A Anatomia da Mentira
 
-> "Funciona na minha máquina."
-
-A frase mais dita — e menos verdadeira — da engenharia de software.
-
-<img src="https://media.giphy.com/media/l0HlMG1EX2H38cZeE/giphy.gif" onerror="this.onerror=null; this.src='assets/this-is-fine.gif';" alt="Meme This is Fine: cachorro cercado de fogo dizendo que está tudo bem" width="600">
+<div class="container">
+  <div class="col-text">
+    <p>"Funciona na minha máquina."</p>
+    <p>A frase mais dita — e menos verdadeira — da engenharia de software.</p>
+  </div>
+  <div class="col-img">
+    <img src="https://media.giphy.com/media/l0HlMG1EX2H38cZeE/giphy.gif" onerror="this.onerror=null; this.src='assets/this-is-fine.gif';" alt="Meme This is Fine: cachorro cercado de fogo dizendo que está tudo bem">
+  </div>
+</div>
 
 ---
 
 <!-- Slide 4: O Paraíso chamado Localhost -->
 
 ## O Paraíso chamado Localhost
+
+<div class="col-text">
 
 No seu ambiente local, tudo é perfeito:
 
@@ -51,15 +76,23 @@ No seu ambiente local, tudo é perfeito:
 - Zero firewall, zero proxy, zero latência
 - Você é **root** da sua própria máquina
 
+</div>
+
 ---
 
 <!-- Slide 5: O Paraíso chamado Localhost (continuação) -->
 
-## É quase mágico ✨
+## É Quase Mágico ✨
 
-<img src="https://media.giphy.com/media/sEqG2g9RGj91PgSRnz/giphy.gif" onerror="this.onerror=null; this.src='assets/bob-esponja-magica.gif';" alt="Meme Bob Esponja criando um arco-íris mágico com as mãos" width="600">
-
-O problema: **produção não é mágica. É física.**
+<div class="container">
+  <div class="col-text">
+    <p>No localhost, tudo responde instantaneamente e nada falha.</p>
+    <p>O problema: <strong>produção não é mágica. É física.</strong></p>
+  </div>
+  <div class="col-img">
+    <img src="https://media.giphy.com/media/sEqG2g9RGj91PgSRnz/giphy.gif" onerror="this.onerror=null; this.src='assets/bob-esponja-magica.gif';" alt="Meme Bob Esponja criando um arco-íris mágico com as mãos">
+  </div>
+</div>
 
 ---
 
@@ -67,21 +100,28 @@ O problema: **produção não é mágica. É física.**
 
 ## A Armadilha da Máquina Corporativa
 
-O notebook da empresa chega cheio de "proteção":
-
-- Antivírus varrendo seu `node_modules` a cada build
-- VPN que derruba suas conexões a cada 30 minutos
-- Proxy corporativo bloqueando metade da internet
-
-Segurança sem contexto vira um portão trancado... no meio de um gramado aberto.
-
-<img src="assets/portao-inutil.gif" onerror="this.onerror=null; this.src='assets/portao-inutil.gif';" alt="Meme do portão inútil: portão fechado no meio de um gramado sem cerca nenhuma" width="600">
+<div class="container">
+  <div class="col-text">
+    <p>O notebook da empresa chega cheio de "proteção":</p>
+    <ul>
+      <li>Antivírus varrendo seu <code>node_modules</code> a cada build</li>
+      <li>VPN que derruba suas conexões a cada 30 minutos</li>
+      <li>Proxy corporativo bloqueando metade da internet</li>
+    </ul>
+    <p>Segurança sem contexto vira um portão trancado... no meio de um gramado aberto.</p>
+  </div>
+  <div class="col-img">
+    <img src="assets/portao-inutil.gif" onerror="this.onerror=null; this.src='assets/portao-inutil.gif';" alt="Meme do portão inútil: portão fechado no meio de um gramado sem cerca nenhuma">
+  </div>
+</div>
 
 ---
 
 <!-- Slide 7: O Perigo da Abstração -->
 
 ## O Perigo da Abstração
+
+<div class="col-text">
 
 Frameworks e SDKs escondem o mundo real de você:
 
@@ -91,11 +131,15 @@ Frameworks e SDKs escondem o mundo real de você:
 
 **Abstração não elimina complexidade. Ela só adia a conta.**
 
+</div>
+
 ---
 
 <!-- Slide 8: O Labirinto da Topologia de Rede -->
 
 ## O Labirinto da Topologia de Rede
+
+<div class="col-text">
 
 Entre o seu código e o usuário existem:
 
@@ -103,15 +147,23 @@ Entre o seu código e o usuário existem:
 - VPCs, subnets, security groups e NAT
 - DNS interno, DNS externo e TTLs que ninguém lembra
 
+</div>
+
 ---
 
 <!-- Slide 9: O Labirinto da Topologia de Rede (continuação) -->
 
-## Você, debugando em produção
+## Você, Debugando em Produção
 
-<img src="https://media.giphy.com/media/l0IylOPCNkiqOgMyA/giphy.gif" onerror="this.onerror=null; this.src='assets/charlie-conspiracy.gif';" alt="Meme Charlie Conspiracy: personagem apontando para um quadro cheio de conspirações conectadas por barbante" width="600">
-
-Se a sua explicação para o bug precisa de barbante vermelho, **a arquitetura precisa de revisão.**
+<div class="container">
+  <div class="col-text">
+    <p>Cada hipótese vira um fio no quadro de investigação.</p>
+    <p>Se a sua explicação para o bug precisa de barbante vermelho, <strong>a arquitetura precisa de revisão.</strong></p>
+  </div>
+  <div class="col-img">
+    <img src="https://media.giphy.com/media/l0IylOPCNkiqOgMyA/giphy.gif" onerror="this.onerror=null; this.src='assets/charlie-conspiracy.gif';" alt="Meme Charlie Conspiracy: personagem apontando para um quadro cheio de conspirações conectadas por barbante">
+  </div>
+</div>
 
 ---
 
@@ -119,19 +171,24 @@ Se a sua explicação para o bug precisa de barbante vermelho, **a arquitetura p
 
 ## A Vingança da Latência
 
-No `localhost`, cada chamada leva ~0 ms.
-
-Em produção: rede real, regiões distantes, TLS handshake, filas...
-
-Uma query de 1 ms vira 200 ms. Multiplique por 50 chamadas.
-
-<img src="https://media.giphy.com/media/yFqqeswEdw84o/giphy.gif" onerror="this.onerror=null; this.src='assets/preguica-zootopia.gif';" alt="Meme da preguiça Flash de Zootopia reagindo em câmera lentíssima" width="600">
+<div class="container">
+  <div class="col-text">
+    <p>No <code>localhost</code>, cada chamada leva ~0 ms.</p>
+    <p>Em produção: rede real, regiões distantes, TLS handshake, filas...</p>
+    <p>Uma query de 1 ms vira 200 ms. <strong>Multiplique por 50 chamadas.</strong></p>
+  </div>
+  <div class="col-img">
+    <img src="https://media.giphy.com/media/yFqqeswEdw84o/giphy.gif" onerror="this.onerror=null; this.src='assets/preguica-zootopia.gif';" alt="Meme da preguiça Flash de Zootopia reagindo em câmera lentíssima">
+  </div>
+</div>
 
 ---
 
 <!-- Slide 11: Permissões e Variáveis -->
 
 ## Permissões e Variáveis
+
+<div class="col-text">
 
 Os dois clássicos do "só quebra em produção":
 
@@ -140,23 +197,27 @@ Os dois clássicos do "só quebra em produção":
 
 Se a configuração mora na cabeça de alguém, **o ambiente não é reproduzível.**
 
+</div>
+
 ---
 
-<!-- Slide 12: A Virada de Chave -->
+<!-- Slide 12: A Virada de Chave (Werner Vogels) -->
 
 ## A Virada de Chave
 
-> "You build it, you run it."
->
-> — **Werner Vogels**, CTO da Amazon
+<p class="highlight-quote">"You build it, you run it."</p>
 
-Quem escreve o código deve sentir as consequências dele em produção. Responsabilidade de ponta a ponta muda a forma como escrevemos software.
+<p>Werner Vogels — CTO da Amazon</p>
+
+<p>Quem escreve o código deve sentir as consequências dele em produção. Responsabilidade de ponta a ponta muda a forma como escrevemos software.</p>
 
 ---
 
 <!-- Slide 13: Terraform e IaC -->
 
 ## Terraform e IaC
+
+<div class="col-text">
 
 Infraestrutura como Código transforma ambiente em artefato:
 
@@ -171,11 +232,15 @@ resource "aws_s3_bucket" "app" {
 - Dev, staging e prod nascem da **mesma fonte**
 - O fim do "cliquei no console e não lembro o quê"
 
+</div>
+
 ---
 
 <!-- Slide 14: CI/CD — A Ponte Incorruptível -->
 
 ## CI/CD: A Ponte Incorruptível
+
+<div class="col-text">
 
 Entre o `git push` e a produção, ninguém toca em nada manualmente:
 
@@ -187,19 +252,36 @@ A pipeline não esquece passos, não tem pressa e não diz "na minha máquina fu
 
 Estes slides foram publicados exatamente assim — meta, eu sei.
 
+</div>
+
 ---
 
 <!-- Slide 15: A Cultura DevOps -->
 
 ## A Cultura DevOps
 
-Ferramenta sem cultura é só gasto de dinheiro.
+<div class="split-screen">
+  <div>
+    <h2>Para Devs</h2>
+    <p>Produção não é "problema da infra".</p>
+    <ul>
+      <li>Instrumente seu código</li>
+      <li>Observe suas métricas</li>
+      <li>Assuma o pager</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Para Infra</h2>
+    <p>Pare de dizer "não", comece a dizer "como".</p>
+    <ul>
+      <li>Automatize tudo</li>
+      <li>Dê autonomia com guardrails</li>
+      <li>Infraestrutura como Código</li>
+    </ul>
+  </div>
+</div>
 
-**Para Devs:** produção não é "problema da infra" — instrumente, observe, assuma o pager.
-
-**Para Infra:** pare de dizer "não" e comece a dizer "como" — automatize, dê autonomia com guardrails.
-
-**DevOps não é um cargo. É um contrato de confiança entre times.**
+<p>DevOps não é um cargo. É um contrato de confiança entre times.</p>
 
 ---
 
@@ -207,8 +289,12 @@ Ferramenta sem cultura é só gasto de dinheiro.
 
 # Obrigado!
 
-**Perguntas?**
-
-<img src="https://media.giphy.com/media/1d7F9xyq6j7C1ojbC5/giphy.gif" onerror="this.onerror=null; this.src='assets/cachorro-sorrindo.gif';" alt="Meme do cachorro sorrindo timidamente para a câmera" width="600">
-
-Slides disponíveis em: **matheuzfz.github.io/serasa-tech-summit-2026**
+<div class="container">
+  <div class="col-text">
+    <p><strong>Perguntas?</strong></p>
+    <p>Slides disponíveis em:<br>matheuzfz.github.io/serasa-tech-summit-2026</p>
+  </div>
+  <div class="col-img">
+    <img src="https://media.giphy.com/media/1d7F9xyq6j7C1ojbC5/giphy.gif" onerror="this.onerror=null; this.src='assets/cachorro-sorrindo.gif';" alt="Meme do cachorro sorrindo timidamente para a câmera">
+  </div>
+</div>
