@@ -1,0 +1,90 @@
+name: Build and Deploy Presentation
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Permissões necessárias para publicar no GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante que apenas um deploy rode por vez
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  # ------------------------------------------------------------------
+  # Job 1: Testes de qualidade (lint do Markdown + build de teste)
+  # ------------------------------------------------------------------
+  test:
+    name: Lint and Test Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Lint do Markdown (markdownlint-cli)
+        run: npx --yes markdownlint-cli presentation.md
+
+      - name: Dry-run do Marp (build de teste)
+        run: npx --yes @marp-team/marp-cli@latest presentation.md -o /tmp/test-build.html --allow-local-files
+
+  # ------------------------------------------------------------------
+  # Job 2: Build final do HTML e preparação do artefato para o Pages
+  # ------------------------------------------------------------------
+  build:
+    name: Build Presentation
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Compilar presentation.md para index.html
+        run: |
+          mkdir -p dist
+          npx --yes @marp-team/marp-cli@latest presentation.md -o dist/index.html --allow-local-files
+
+      - name: Copiar assets para o artefato
+        run: cp -r assets dist/ || echo "Pasta assets vazia ou inexistente"
+
+      - name: Upload do artefato para o Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  # ------------------------------------------------------------------
+  # Job 3: Deploy no GitHub Pages
+  # ------------------------------------------------------------------
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
