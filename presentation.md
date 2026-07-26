@@ -1,9 +1,10 @@
 ---
-marp: true
-theme: default
-paginate: true
 title: Minha Apresentação
-description: Apresentação criada com Marp e publicada no GitHub Pages
+theme: dracula
+revealOptions:
+  transition: slide
+  transitionSpeed: default
+  slideNumber: true
 ---
 
 # Minha Apresentação
@@ -36,7 +37,7 @@ Subtítulo da apresentação
 
 Exemplo de imagem (coloque seus arquivos na pasta `assets/`):
 
-![w:600](assets/exemplo.png)
+![Exemplo](assets/exemplo.png) <!-- .element: width="600px" -->
 
 ---
 
@@ -44,7 +45,7 @@ Exemplo de imagem (coloque seus arquivos na pasta `assets/`):
 
 ```python
 def ola_mundo():
-    print("Olá, Marp!")
+    print("Olá, Reveal.js!")
 ```
 
 ---
