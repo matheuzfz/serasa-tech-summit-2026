@@ -1,4 +1,4 @@
-name: Build and Deploy Presentation
+name: Build and Deploy Landing Page
 
 on:
   push:
@@ -17,49 +17,39 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
-env:
-  NODE_VERSION: "20"
-
 jobs:
   # ------------------------------------------------------------------
-  # Job 1: Testes de qualidade (lint do Markdown)
+  # Job 1: Testes de qualidade (lint do HTML)
   # ------------------------------------------------------------------
   test:
-    name: Lint Markdown
+    name: Validate HTML
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: Lint do Markdown (markdownlint-cli)
-        run: npx --yes markdownlint-cli presentation.md
+      - name: Verificar que index.html existe
+        run: test -f index.html
 
   # ------------------------------------------------------------------
-  # Job 2: Build do site estático com reveal-md e upload do artefato
+  # Job 2: Build do site estático e upload do artefato
   # ------------------------------------------------------------------
   build:
-    name: Build Presentation
+    name: Build Static Site
     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v4
 
-      - name: Gerar site estático com reveal-md
-        run: npx --yes reveal-md presentation.md --static _site
+      - name: Criar diretório de deploy
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r assets/ _site/assets/ 2>/dev/null || true
 
       - name: Upload do artefato para o Pages
         uses: actions/upload-pages-artifact@v3
