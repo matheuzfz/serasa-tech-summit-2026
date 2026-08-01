@@ -664,14 +664,9 @@
       transform: translateY(0);
     }
 
-    /* SVG text legibility — elegant halo instead of opaque rects */
+    /* SVG text legibility — elegant halo/glow without solid black patched rects */
     .svg-text {
-      text-shadow:
-        2px 2px 0 #000,
-        -2px -2px 0 #000,
-        2px -2px 0 #000,
-        -2px 2px 0 #000,
-        0 4px 10px rgba(0,0,0,0.8);
+      text-shadow: 0px 0px 5px rgba(0, 0, 0, 1), 0px 0px 10px rgba(0, 0, 0, 1);
     }
 
     /* SVG animation */
@@ -679,14 +674,14 @@
       to { stroke-dashoffset: -20; }
     }
 
-    .svg-animate-dash {
-      stroke-dasharray: 6 4;
-      animation: dash-flow 1.5s linear infinite;
-    }
-
     @keyframes neon-pulse {
       0%, 100% { opacity: .6; }
       50% { opacity: 1; }
+    }
+
+    .svg-animate-dash {
+      stroke-dasharray: 6 4;
+      animation: dash-flow 1.5s linear infinite;
     }
 
     .svg-pulse {
@@ -783,6 +778,8 @@
           <svg viewBox="0 0 520 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama: Localhost isolado versus a complexidade da nuvem">
             <!-- Left side: Localhost bubble -->
             <g opacity=".95">
+              <!-- Bubble -->
+              <ellipse cx="80" cy="195" rx="90" ry="75" stroke="#39FF14" stroke-width="1.5" stroke-dasharray="4 3" fill="none" opacity=".3"/>
               <!-- Notebook -->
               <rect x="30" y="160" width="100" height="70" rx="6" stroke="#39FF14" stroke-width="2" fill="none"/>
               <rect x="42" y="170" width="76" height="42" rx="2" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
@@ -790,8 +787,6 @@
               <line x1="55" y1="188" x2="95" y2="188" stroke="#39FF14" stroke-width="1" opacity=".5"/>
               <line x1="55" y1="196" x2="100" y2="196" stroke="#39FF14" stroke-width="1" opacity=".5"/>
               <rect x="15" y="232" width="130" height="6" rx="3" stroke="#39FF14" stroke-width="1.5" fill="none"/>
-              <!-- Bubble -->
-              <ellipse cx="80" cy="195" rx="90" ry="75" stroke="#39FF14" stroke-width="1.5" stroke-dasharray="4 3" fill="none" opacity=".3"/>
               <!-- Labels -->
               <text x="80" y="290" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="13" font-weight="600" class="svg-text">LOCALHOST</text>
               <text x="80" y="310" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="10" class="svg-text">root · 0ms · sem firewall</text>
@@ -809,8 +804,23 @@
             </g>
             <!-- Right side: Cloud chaos -->
             <g opacity=".95">
+              <!-- Connection / Background lines -->
+              <polyline points="340,260 350,270 360,265 370,275 380,268 390,278 400,260" stroke="#39FF14" stroke-width="1.2" fill="none" opacity=".5" class="svg-animate-dash"/>
               <!-- Cloud shape -->
               <path d="M300 100 Q280 70 320 60 Q350 40 380 65 Q420 50 440 80 Q470 75 475 105 Q500 110 495 140 Q505 170 475 180 L475 300 Q480 330 450 340 L300 340 Q270 335 270 310 L270 180 Q250 170 255 140 Q245 110 270 105 Q275 85 300 100Z" stroke="#39FF14" stroke-width="1.8" fill="none"/>
+              <!-- VPC box -->
+              <rect x="296" y="202" width="158" height="120" rx="4" stroke="#39FF14" stroke-width="1.5" stroke-dasharray="5 3" fill="none" opacity=".5"/>
+              <text x="310" y="218" fill="#39FF14" font-family="'Fira Code',monospace" font-size="10" opacity=".8" class="svg-text">VPC</text>
+              <!-- Subnets -->
+              <rect x="304" y="224" width="68" height="42" rx="3" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.05)"/>
+              <text x="338" y="236" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="8" class="svg-text">SUBNET-A</text>
+              <text x="338" y="254" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-text">app</text>
+              <rect x="380" y="224" width="68" height="42" rx="3" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.05)"/>
+              <text x="414" y="236" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="8" class="svg-text">SUBNET-B</text>
+              <text x="414" y="254" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-text">db</text>
+              <!-- Security group -->
+              <rect x="304" y="274" width="145" height="36" rx="3" stroke="#39FF14" stroke-width="1.2" stroke-dasharray="3 2" fill="none" opacity=".6"/>
+              <text x="376.5" y="292" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">SECURITY GROUPS</text>
               <!-- Firewall bar -->
               <g opacity=".7">
                 <rect x="286" y="126" width="178" height="32" rx="3" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.05)"/>
@@ -821,21 +831,6 @@
                 <rect x="290" y="166" width="170" height="30" rx="3" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.05)"/>
                 <text x="375" y="181" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="10" class="svg-text">LOAD BALANCER</text>
               </g>
-              <!-- VPC box -->
-              <rect x="296" y="202" width="158" height="120" rx="4" stroke="#39FF14" stroke-width="1.5" stroke-dasharray="5 3" fill="none" opacity=".5"/>
-              <text x="310" y="218" fill="#39FF14" font-family="'Fira Code',monospace" font-size="10" opacity=".8" class="svg-text">VPC</text>
-              <!-- Subnets -->
-              <rect x="304" y="224" width="68" height="42" rx="3" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.05)"/>
-              <text x="338" y="240" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="8" class="svg-text">SUBNET-A</text>
-              <text x="338" y="255" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-text">app</text>
-              <rect x="380" y="224" width="68" height="42" rx="3" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.05)"/>
-              <text x="414" y="240" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="8" class="svg-text">SUBNET-B</text>
-              <text x="414" y="255" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-text">db</text>
-              <!-- Security group -->
-              <rect x="304" y="274" width="145" height="36" rx="3" stroke="#39FF14" stroke-width="1.2" stroke-dasharray="3 2" fill="none" opacity=".6"/>
-              <text x="376" y="292" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">SECURITY GROUPS</text>
-              <!-- Zigzag lines (tortuous paths) -->
-              <polyline points="340,260 350,270 360,265 370,275 380,268 390,278 400,260" stroke="#39FF14" stroke-width="1.2" fill="none" opacity=".5" class="svg-animate-dash"/>
               <!-- Cloud label -->
               <text x="375" y="365" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="13" font-weight="600" class="svg-text">CLOUD (AWS)</text>
               <text x="375" y="385" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="10" class="svg-text">latência · firewalls · IAM</text>
@@ -879,6 +874,18 @@
           <svg viewBox="0 0 520 500" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de rede complexo com gargalos de latência">
             <!-- Title -->
             <text x="260" y="25" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="13" font-weight="600" opacity=".8" class="svg-text">TOPOLOGIA DE REDE — PRODUÇÃO</text>
+
+            <!-- CONNECTION LINES (Behind elements) -->
+            <line x1="260" y1="98" x2="260" y2="115" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="260" y1="147" x2="260" y2="165" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="260" y1="197" x2="260" y2="215" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="260" y1="247" x2="160" y2="288" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="260" y1="247" x2="360" y2="288" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="227" y1="312" x2="293" y2="312" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="360" y1="336" x2="360" y2="363" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="160" y1="336" x2="160" y2="368" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="160" y1="410" x2="160" y2="430" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+
             <!-- User -->
             <g>
               <circle cx="260" cy="60" r="18" stroke="#39FF14" stroke-width="1.8" fill="none"/>
@@ -887,21 +894,18 @@
               <text x="260" y="92" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="10" class="svg-text">USUÁRIO</text>
             </g>
             <!-- DNS -->
-            <line x1="260" y1="98" x2="260" y2="115" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
             <rect x="205" y="115" width="110" height="32" rx="4" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
             <text x="260" y="131" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="10" class="svg-text">DNS / CDN</text>
             <!-- Latency marker -->
             <rect x="323" y="121" width="60" height="22" rx="11" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.1)"/>
             <text x="353" y="132" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-pulse svg-text">+15ms</text>
             <!-- WAF -->
-            <line x1="260" y1="147" x2="260" y2="165" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
             <rect x="195" y="165" width="130" height="32" rx="4" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
             <text x="260" y="181" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="10" class="svg-text">WAF / FIREWALL</text>
             <!-- Latency -->
             <rect x="333" y="171" width="60" height="22" rx="11" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.1)"/>
             <text x="363" y="182" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-pulse svg-text">+5ms</text>
             <!-- Load Balancer -->
-            <line x1="260" y1="197" x2="260" y2="215" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
             <rect x="175" y="215" width="170" height="32" rx="4" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
             <text x="260" y="231" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="10" class="svg-text">LOAD BALANCER / ALB</text>
             <rect x="353" y="221" width="60" height="22" rx="11" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.1)"/>
@@ -909,41 +913,41 @@
             <!-- VPC boundary -->
             <rect x="70" y="260" width="380" height="210" rx="6" stroke="#39FF14" stroke-width="1.5" stroke-dasharray="6 4" fill="none" opacity=".4"/>
             <text x="88" y="278" fill="#39FF14" font-family="'Fira Code',monospace" font-size="10" opacity=".7" class="svg-text">VPC 10.0.0.0/16</text>
-            <!-- Split to services -->
-            <line x1="260" y1="247" x2="160" y2="290" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <line x1="260" y1="247" x2="360" y2="290" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <!-- Service A -->
+
+            <!-- Service A (Subnet Publica) x=93, y=288, w=134, h=48 -> center=(160, 312) -->
             <rect x="93" y="288" width="134" height="48" rx="5" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
-            <text x="160" y="306" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="9" class="svg-text">SUBNET PÚBLICA</text>
-            <text x="160" y="324" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">API Gateway</text>
-            <!-- Service B -->
+            <text x="160" y="303" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="9" class="svg-text">SUBNET PÚBLICA</text>
+            <text x="160" y="321" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">API Gateway</text>
+
+            <!-- Service B (Subnet Privada) x=293, y=288, w=134, h=48 -> center=(360, 312) -->
             <rect x="293" y="288" width="134" height="48" rx="5" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
-            <text x="360" y="306" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="9" class="svg-text">SUBNET PRIVADA</text>
-            <text x="360" y="324" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">App Service</text>
-            <!-- Cross-connect with bottleneck -->
-            <line x1="227" y1="312" x2="293" y2="312" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <rect x="233" y="300" width="55" height="22" rx="11" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.15)"/>
-            <text x="260" y="311" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-pulse svg-text">+2ms</text>
+            <text x="360" y="303" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="9" class="svg-text">SUBNET PRIVADA</text>
+            <text x="360" y="321" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">App Service</text>
+
+            <!-- Cross-connect bottleneck pill x=233, y=301, w=54, h=22 -> center=(260, 312) -->
+            <rect x="233" y="301" width="54" height="22" rx="11" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.15)"/>
+            <text x="260" y="312" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-pulse svg-text">+2ms</text>
+
             <!-- Database -->
-            <line x1="360" y1="336" x2="360" y2="370" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
             <g>
               <ellipse cx="360" cy="375" rx="56" ry="12" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
               <rect x="304" y="375" width="112" height="34" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.04)"/>
               <ellipse cx="360" cy="409" rx="56" ry="12" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
-              <text x="360" y="394" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="10" class="svg-text">DATABASE</text>
+              <text x="360" y="392" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="10" class="svg-text">DATABASE</text>
             </g>
             <rect x="418" y="381" width="80" height="22" rx="11" stroke="#39FF14" stroke-width="1.2" fill="rgba(57,255,20,.15)"/>
             <text x="458" y="392" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="9" class="svg-pulse svg-text">+50-200ms</text>
-            <!-- Cache -->
-            <line x1="160" y1="336" x2="160" y2="370" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+
+            <!-- Cache x=98, y=368, w=124, h=42 -> center=(160, 389) -->
             <rect x="98" y="368" width="124" height="42" rx="5" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
-            <text x="160" y="384" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="9" class="svg-text">REDIS / CACHE</text>
-            <text x="160" y="402" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">ElastiCache</text>
-            <!-- Queue -->
-            <line x1="160" y1="410" x2="160" y2="432" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <text x="160" y="380" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="9" class="svg-text">REDIS / CACHE</text>
+            <text x="160" y="398" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">ElastiCache</text>
+
+            <!-- Queue x=102, y=430, w=116, h=34 -> center=(160, 447) -->
             <rect x="102" y="430" width="116" height="34" rx="5" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.06)"/>
             <text x="160" y="447" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="9" class="svg-text">SQS / QUEUE</text>
-            <!-- Total latency banner -->
+
+            <!-- Total latency banner x=140, y=476, w=240, h=26 -> center=(260, 489) -->
             <rect x="140" y="476" width="240" height="26" rx="4" stroke="#39FF14" stroke-width="1.8" fill="rgba(57,255,20,.08)"/>
             <text x="260" y="489" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="11" font-weight="600" class="svg-text">TOTAL: ~275ms por request</text>
           </svg>
@@ -998,7 +1002,27 @@
               </linearGradient>
             </defs>
             <text x="260" y="25" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="13" font-weight="600" opacity=".8" class="svg-text">PIPELINE CI/CD</text>
-            <!-- Stage 1: Code / Git Push -->
+
+            <!-- CONNECTIONS (Behind elements) -->
+            <!-- Arrow 1 -->
+            <line x1="155" y1="85" x2="195" y2="85" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <polygon points="195,80 195,90 207,85" fill="#39FF14" opacity=".8"/>
+            <!-- Arrow 2 -->
+            <line x1="315" y1="85" x2="355" y2="85" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <polygon points="355,80 355,90 367,85" fill="#39FF14" opacity=".8"/>
+            <!-- Down arrow to Terraform -->
+            <line x1="260" y1="144" x2="260" y2="180" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <polygon points="255,180 265,180 260,192" fill="#39FF14" opacity=".8"/>
+            <!-- Split to environments -->
+            <line x1="210" y1="254" x2="110" y2="288" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="260" y1="254" x2="260" y2="288" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="310" y1="254" x2="410" y2="288" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <!-- Output lines -->
+            <line x1="110" y1="344" x2="110" y2="375" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="260" y1="344" x2="260" y2="373" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <line x1="410" y1="344" x2="410" y2="375" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+
+            <!-- Stage 1: Code / Git Push x=25, y=50, w=130, h=70 -> center=(90, 85) -->
             <g>
               <rect x="25" y="50" width="130" height="70" rx="5" stroke="#39FF14" stroke-width="1.8" fill="rgba(57,255,20,.06)"/>
               <!-- Git icon -->
@@ -1006,66 +1030,57 @@
               <circle cx="65" cy="73" r="3.5" fill="#39FF14" opacity=".5"/>
               <line x1="74" y1="73" x2="86" y2="73" stroke="#39FF14" stroke-width="1.2"/>
               <circle cx="91" cy="73" r="3.5" stroke="#39FF14" stroke-width="1.2" fill="none"/>
-              <text x="90" y="98" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" font-weight="600" class="svg-text">GIT PUSH</text>
-              <text x="90" y="112" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">código + IaC</text>
+              <text x="90" y="96" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" font-weight="600" class="svg-text">GIT PUSH</text>
+              <text x="90" y="110" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">código + IaC</text>
             </g>
-            <!-- Arrow 1 -->
-            <line x1="155" y1="85" x2="195" y2="85" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <polygon points="195,80 195,90 207,85" fill="#39FF14" opacity=".8"/>
-            <!-- Stage 2: Test -->
+
+            <!-- Stage 2: Test x=200, y=50, w=115, h=70 -> center=(257.5, 85) -->
             <g>
               <rect x="200" y="50" width="115" height="70" rx="5" stroke="#39FF14" stroke-width="1.8" fill="rgba(57,255,20,.06)"/>
               <!-- Checkmark icon -->
               <circle cx="240" cy="73" r="11" stroke="#39FF14" stroke-width="1.5" fill="none"/>
               <polyline points="233,73 238,79 248,67" stroke="#39FF14" stroke-width="2" fill="none"/>
-              <text x="257" y="98" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" font-weight="600" class="svg-text">TEST</text>
-              <text x="257" y="112" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">lint · unit · SAST</text>
+              <text x="257.5" y="96" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" font-weight="600" class="svg-text">TEST</text>
+              <text x="257.5" y="110" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">lint · unit · SAST</text>
             </g>
-            <!-- Arrow 2 -->
-            <line x1="315" y1="85" x2="355" y2="85" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <polygon points="355,80 355,90 367,85" fill="#39FF14" opacity=".8"/>
-            <!-- Stage 3: Build -->
+
+            <!-- Stage 3: Build x=360, y=50, w=130, h=70 -> center=(425, 85) -->
             <g>
               <rect x="360" y="50" width="130" height="70" rx="5" stroke="#39FF14" stroke-width="1.8" fill="rgba(57,255,20,.06)"/>
               <!-- Container/box icon -->
               <rect x="395" y="64" width="20" height="20" rx="2" stroke="#39FF14" stroke-width="1.5" fill="none"/>
               <line x1="395" y1="71" x2="415" y2="71" stroke="#39FF14" stroke-width="1"/>
               <line x1="405" y1="64" x2="405" y2="84" stroke="#39FF14" stroke-width="1"/>
-              <text x="425" y="98" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" font-weight="600" class="svg-text">BUILD</text>
-              <text x="425" y="112" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">artefato imutável</text>
+              <text x="425" y="96" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" font-weight="600" class="svg-text">BUILD</text>
+              <text x="425" y="110" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">artefato imutável</text>
             </g>
+
             <!-- Central pipeline bar -->
             <rect x="25" y="140" width="465" height="4" rx="2" fill="rgba(57,255,20,.2)"/>
             <rect x="25" y="140" width="465" height="4" rx="2" fill="url(#pipeline-gradient)" opacity=".6">
               <animate attributeName="x" values="25;490;25" dur="4s" repeatCount="indefinite"/>
             </rect>
-            <!-- Down arrow to Terraform -->
-            <line x1="260" y1="144" x2="260" y2="180" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <polygon points="255,180 265,180 260,192" fill="#39FF14" opacity=".8"/>
-            <!-- Terraform block -->
+
+            <!-- Terraform block x=135, y=192, w=250, h=62 -> center=(260, 223) -->
             <rect x="135" y="192" width="250" height="62" rx="5" stroke="#39FF14" stroke-width="1.8" fill="rgba(57,255,20,.06)"/>
-            <text x="260" y="217" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="12" font-weight="600" class="svg-text">TERRAFORM PLAN / APPLY</text>
-            <text x="260" y="238" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="10" class="svg-text">infraestrutura como código</text>
-            <!-- Split to environments -->
-            <line x1="210" y1="254" x2="110" y2="290" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <line x1="260" y1="254" x2="260" y2="290" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <line x1="310" y1="254" x2="410" y2="290" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <!-- Dev -->
+            <text x="260" y="213" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="12" font-weight="600" class="svg-text">TERRAFORM PLAN / APPLY</text>
+            <text x="260" y="233" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="10" class="svg-text">infraestrutura como código</text>
+
+            <!-- Dev x=55, y=288, w=110, h=56 -> center=(110, 316) -->
             <rect x="55" y="288" width="110" height="56" rx="5" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.05)"/>
-            <text x="110" y="310" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" class="svg-text">DEV</text>
-            <text x="110" y="330" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">auto-deploy</text>
-            <!-- Staging -->
+            <text x="110" y="307" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" class="svg-text">DEV</text>
+            <text x="110" y="325" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">auto-deploy</text>
+
+            <!-- Staging x=205, y=288, w=110, h=56 -> center=(260, 316) -->
             <rect x="205" y="288" width="110" height="56" rx="5" stroke="#39FF14" stroke-width="1.5" fill="rgba(57,255,20,.05)"/>
-            <text x="260" y="310" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" class="svg-text">STAGING</text>
-            <text x="260" y="330" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">approval gate</text>
-            <!-- Prod -->
+            <text x="260" y="307" text-anchor="middle" dominant-baseline="central" fill="#f0f0f0" font-family="'Fira Code',monospace" font-size="11" class="svg-text">STAGING</text>
+            <text x="260" y="325" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">approval gate</text>
+
+            <!-- Prod x=355, y=288, w=110, h=56 -> center=(410, 316) -->
             <rect x="355" y="288" width="110" height="56" rx="5" stroke="#39FF14" stroke-width="2" fill="rgba(57,255,20,.07)"/>
-            <text x="410" y="310" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="11" font-weight="700" class="svg-text">PROD</text>
-            <text x="410" y="330" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">canary deploy</text>
-            <!-- Output: Infrastructure blocks -->
-            <line x1="110" y1="344" x2="110" y2="372" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <line x1="260" y1="344" x2="260" y2="372" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
-            <line x1="410" y1="344" x2="410" y2="372" stroke="#39FF14" stroke-width="1.5" class="svg-animate-dash"/>
+            <text x="410" y="307" text-anchor="middle" dominant-baseline="central" fill="#39FF14" font-family="'Fira Code',monospace" font-size="11" font-weight="700" class="svg-text">PROD</text>
+            <text x="410" y="325" text-anchor="middle" dominant-baseline="central" fill="#999" font-family="'Fira Code',monospace" font-size="9" class="svg-text">canary deploy</text>
+
             <!-- Infrastructure icons row -->
             <g opacity=".9">
               <!-- Server -->
